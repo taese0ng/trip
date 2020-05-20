@@ -1,7 +1,7 @@
 var express  = require('express');
 var router   = express.Router();
-var User     = require('../models/User');
-var util     = require('../util');
+var User     = require('../models/user.js');
+var util     = require('../util.js');
 var jwt      = require('jsonwebtoken');
 var dotenv     = require('dotenv');
 dotenv.config()
