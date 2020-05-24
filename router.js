@@ -1,7 +1,10 @@
-// 사용자 정보 관련
-// api -> user ->
+// global (로그인 안하고도)
 const JOIN = '/join'
 const LOGIN = '/login'
+
+// user (로그인 하고나서)
+// api -> user ->
+const SELECT_TENDENCY = '/select-tendency'
 const USER_DETAIL = '/:id' // 함수로 조지자
 const EDIT_PROFILE = '/edit-profile'
 
@@ -18,6 +21,7 @@ const routes = {
     join : JOIN,    // 1
     login : LOGIN,
     
+    selectTendency : SELECT_TENDENCY,
     userDetail: id => {
         if (id)
             return `/users/${id}`

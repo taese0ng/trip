@@ -7,6 +7,7 @@ import passport from 'passport'
 
 import './passport.js'
 import globalRouter from './routers/globalRouter.js'
+import userRouter from './routers/UserRouter.js'
 
 
 const app = express()
@@ -19,6 +20,7 @@ app.use(cookieParser())
 app.use(passport.initialize())
 
 app.use('/' , globalRouter)
+app.use('/user', userRouter)
 
 
 
