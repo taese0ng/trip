@@ -9,7 +9,7 @@ var dotenv     = require('dotenv');
 var https      = require('https');
 var http       = require('http');
 var fs         = require('fs');
-dotenv.config()
+dotenv.config();
 
 // Database
 mongoose.Promise = global.Promise;
@@ -48,10 +48,18 @@ app.use('/api/users', require('./api/user')); //2
 app.use('/api/auth', require('./api/auth'));   //2
 
 // Server
-var server = https.createServer(options, app)
-server.listen(process.env.PORT_ENV, () => {
-  console.log('✔ listening on port:' + `https://localhost:${process.env.PORT_ENV}`)
-});
+if(process.env.NODE_ENV == 'production') {
+  var server = https.createServer(options, app)
+  server.listen(process.env.PORT_PROD, () => {
+    console.log('✔ listening on port:' + `https://localhost:${process.env.PORT_PROD}`)
+  });
+} else {
+  app.listen(process.env.PORT , function(){
+    console.log('✔ listening on port:' + `http://localhost:${process.env.PORT}`);
+  });
+}
+
+
 /*
 options ?
   https.createServer(options, app.listen(process.env.PORT_PROD, function(){
