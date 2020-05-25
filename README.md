@@ -31,13 +31,24 @@ $ nohup npm start &
 
 ## **TODO List** 📝
 ### [✔] Sing UP
-- [POST] body
+#### 📎 API 통신 예제
+- [POST] '/join'
+- Request
 ```js
 // body
 "email": "dlfdyd96@gmail.com", // 아이디
 "password": "zz",
 "passwordConfirmation": "zz",
 "name" : "일용"
+```
+- Response
+```js
+// 회원가입 후 바로 로그인됨 -> Token Return
+// status : 200 OK
+data : {
+    "name": "일용",
+    "token": "eyJhbGciOiJIUzI..." // token 정보 -> LocalStorage에 저장할 것
+}
 ```
 - [✔] 아이디 : Email로 변경해야함.
 - [+] 이메일 확인 과정 필요
