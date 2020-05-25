@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 const itinerarySchema = new mongoose.Schema({
     creator : {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: "Creator is required"
     },
     title : {
         type : String,

@@ -1,6 +1,7 @@
 import passport from 'passport'
 import routes from '../router.js'
 import User from '../models/User.js'
+import Itinerary from '../models/Itinerary.js'
 import jwt from 'jsonwebtoken'
 
 // 회원가입
@@ -48,7 +49,13 @@ export const postLogin = (req, res, next) => {
                 // generate a signed son web token with the contents of user object and return it in the response
                 // console.log(`jwt 전`)
                 const token = jwt.sign(user.email, 'thisIsMySecret');
-                return res.json({name : user.name, token});
+                return res.json({
+                    user : {
+                        _id : user._id,
+                        email : user.email,
+                        name : user.name,
+                        _selection : user.selections,
+                    }, token});
             });
         }
     )(req, res);
@@ -82,6 +89,29 @@ export const postTendency = async (req, res, next) => {
         res.status(400).json({
             message: 'Fail to update Tedency',
             selection   : selection
+        })
+    }
+}
+
+
+// User Detail
+export const getUserDetail = async (req, res, next) => {
+    const {
+        params : { id }
+    } = req;
+    try {
+        const user = await User.findOne({_id : id});
+        const itinerary = await Itinerary.find({creator : id})
+        res.status(200).json({
+            message : "Success get User Detail",
+            user,
+            itinerary
+        })
+    } catch(err) {
+        console.log(`Get User Detail Error \n ${err}`);
+        res.status(400).json({
+            message : "Failed to get user Detail",
+            error : err
         })
     }
 }

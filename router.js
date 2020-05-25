@@ -24,7 +24,7 @@ const routes = {
     selectTendency : SELECT_TENDENCY,
     userDetail: id => {
         if (id)
-            return `/users/${id}`
+            return `/user/${id}`
         return USER_DETAIL
     },
     editProfile : EDIT_PROFILE,

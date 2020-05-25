@@ -17,13 +17,6 @@ const userSchema = new mongoose.Schema({
     },
     // item 정보
     selections : [String],
-    itinerary : [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Itinerary"
-        }
-    ]
-    
 })
 
 userSchema.plugin(passportLocalMongoose, {usernameField: 'email'});

@@ -36,10 +36,12 @@ $ nohup npm start &
 - Request
 ```js
 // body
-"email": "dlfdyd96@gmail.com", // 아이디
-"password": "zz",
-"passwordConfirmation": "zz",
-"name" : "일용"
+{
+    "email": "dlfdyd96@gmail.com", // 아이디
+    "password": "zz",
+    "passwordConfirmation": "zz",
+    "name" : "일용"
+}
 ```
 - Response
 ```js
@@ -67,13 +69,18 @@ data : {
 - Response
 ```js
 // status : 200 OK
-data : {
-    "name": "황일용",
-    "token": "eyJhbGciOiJIUzI..." // token 정보 -> LocalStorage에 저장할 것
+{
+    "user": {
+        "_id": "5ecbb09ee0c5c359f7a28cfd",
+        "email": "ee@naver.com",
+        "name": "일용",
+        "_selection": []
+    },
+    "token": "eyJhbGciOiJIUzI1NiJ9.ZWVAbmF2ZXIuY29t.fxkUFWxI6kEkKVYebtiOPuLV8T0bzWlF6iw4y-dgYWc"
 }
 
 // status : 400 Bad Request
-data : {
+{
     "message": "Check the account",
     "user": false
 }
@@ -229,15 +236,208 @@ export const postTendency = async (req, res, next) => {
 ]
 ```
 
-### [🛠] Itinerary C/R/U/D
+### [✔] 여행일정 C/R/U/D
+#### 📎 API 통신 예제
+1. Create
+    - **[POST]** '/itinerary/upload'
+    - Request
+    ```js
+    // body
+    {
+        "title" : "부산 여행",
+        "description" : "부산 여행 갔다 ^^",
+        "routes" : [
+                {
+                    "name": "부산역",
+                    "locationId": 123
+                },
+                // ...Continue...
+            ]
+    }
+
+    // header
+    Authorization : `Bearer ${localStorage.token}` // 꼭 'Bearer ' 붙여줘야함
+    ```
+    - Response
+    ```js
+    // Success(200)
+    {
+        "message": "Success Upload Itinerary",
+        "init": {
+            "routes": [
+                {
+                    "name": "부산역",
+                    "locationId": 123
+                },
+                // ... Continue ...
+            ],
+            "_id": "5ecbda5d726572642507e2e0",  // itinerary id
+            "creator": "5ecbb09ee0c5c359f7a28cfd",  // user id
+            "title": "부산 여행",
+            "description": "부산 여행 갔다 ^^",
+            "createdAt": "2020-05-25T14:46:53.137Z",
+            "__v": 0
+        }
+    }
+    // Fail(400)
+    ```
+2. Read
+    - **[GET]** '/itinerary/${itinerary id값}'
+    - Request
+    ```js
+    // None
+    ```
+    - Response
+    ```js
+    // Success(200)
+    {
+        "message": "Success Get Itinerary",
+        "itinerary": {
+            "routes": [
+                {
+                    "name": "부산역",
+                    "locationId": 123
+                },
+                // ...
+            ],
+            "_id": "5ecbda5d726572642507e2e0",
+            "creator": {
+                "selections": [],
+                "_id": "5ecbb09ee0c5c359f7a28cfd",
+                "email": "ee@naver.com",
+                "name": "일용",
+                "createdAt": "2020-05-25T11:48:46.543Z",
+                "__v": 0
+            },
+            "title": "부산 여행",
+            "description": "부산 여행 갔다 ^^",
+            "createdAt": "2020-05-25T14:46:53.137Z",
+            "__v": 0
+        }
+    }
+
+    // Fail(400)
+    ```
+3. Update
+    - **[POST]** '/itinerary/${itinerary id 값}/edit'
+    - Request
+    ```js
+    // body (수정할 것 만 넣으면 됨)
+    {
+        "title" : "부산 여행",
+        "description" : "부산 여행 갔다 ^^ (수정)",
+        "routes" : [
+                {
+                    "name": "부산역"
+                },
+                {
+                    "name": "해운대"
+                },
+                {
+                    "name": "부산역"
+                }
+            ]
+    }
+
+    // header
+    Authorization : `Bearer ${localStorage.token}` // 꼭 'Bearer ' 붙여줘야함
+    ```
+    - Response
+    ```js
+    // Success(200)
+    {
+        "message": "Success Update Itinerary"
+    }
+
+    // Fail(400)
+    ```
+4. Delete
+    - **[GET]** '/itinerary/${itinerary id 값}/delete'
+    - Request
+    ```js
+    // header
+    Authorization : `Bearer ${localStorage.token}` // 꼭 'Bearer ' 붙여줘야함
+    ```
+    - Response
+    ```js
+    // Success(200)
+    {
+        "message": "Success To Delete itinerary"
+    }
+
+    // Fail(400)
+    {
+        "message": "Failed to Delete Itinerary",
+        "error": {}
+    }
+    ```
 #### ⚙ 동작
 - Itineary Model 만들기
 - User Model에 ref 연결
-1. Create
-2. Read
-3. Update
-4. Delete
-### [❌] 
+```js
+import mongoose from 'mongoose';
+
+const itinerarySchema = new mongoose.Schema({
+    creator : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: "Creator is required"
+    },
+    //....
+})
+
+const model = mongoose.model('Itinerary', itinerarySchema);
+
+export default model;
+
+```
+### [✔] My Page
+#### 📎 API 통신 예제
+- **[GET]** '/user/${사용자 id 값}'
+- Request
+```js
+// None
+```
+- Response
+```js
+{
+    "message": "Success get User Detail",
+    "user": {
+        "selections": [],
+        "_id": "5ecbb09ee0c5c359f7a28cfd",
+        "email": "ee@naver.com",
+        "name": "일용",
+        "createdAt": "2020-05-25T11:48:46.543Z",
+        "__v": 0
+    },
+    "itinerary": [
+        {
+            "routes": [
+                {
+                    "name": "부산역",
+                    "locationId": 123
+                },
+                {
+                    "name": "해운대",
+                    "locationId": 321
+                },
+                {
+                    "name": "부산역",
+                    "locationId": 123
+                }
+            ],
+            "_id": "5ecbdd9a726572642507e2e1",
+            "creator": "5ecbb09ee0c5c359f7a28cfd",
+            "title": "부산 여행",
+            "description": "부산 여행 갔다 ^^",
+            "createdAt": "2020-05-25T15:00:42.970Z",
+            "__v": 0
+        }
+    ]
+}
+```
+#### ⚙ 동작
+~~생략~~
 ### [❌] 이메일 인증 하기
 ### [❌] 네이버 아이디로 로그인
 
