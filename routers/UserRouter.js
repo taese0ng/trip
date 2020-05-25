@@ -5,6 +5,13 @@ import { postTendency } from '../controllers/userController.js'
 
 const userRouter = express.Router()
 
-userRouter.post(routes.selectTendency, passport.authenticate('jwt', { session: false}), postTendency)
+// 경향 선택
+userRouter.post(routes.selectTendency, 
+    passport.authenticate('jwt', { session: false}), 
+    postTendency)
+
+// 사용자 정보
+// userRouter.get(routes.userDetail(), passport.authentication('jwt', {session : false}), getUserDetail)
+
 
 export default userRouter;

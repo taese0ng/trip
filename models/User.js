@@ -3,15 +3,27 @@ import passportLocalMongoose from 'passport-local-mongoose';
 import validator from 'validator';
 
 const userSchema = new mongoose.Schema({
+    // 계정 관련
     name : String,
     email : {
         type : String,
         required: 'Email is required',
         validate: [validator.isEmail]
     },
-
     kakaoId : Number,
-    selections : [String]
+    createdAt : {
+        type: Date,
+        default : Date.now
+    },
+    // item 정보
+    selections : [String],
+    itinerary : [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Itinerary"
+        }
+    ]
+    
 })
 
 userSchema.plugin(passportLocalMongoose, {usernameField: 'email'});

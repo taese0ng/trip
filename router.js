@@ -1,19 +1,19 @@
 // global (로그인 안하고도)
-const JOIN = '/join'
-const LOGIN = '/login'
+const JOIN = '/join'    // 📗
+const LOGIN = '/login'  // 📗
 
 // user (로그인 하고나서)
 // api -> user ->
-const SELECT_TENDENCY = '/select-tendency'
-const USER_DETAIL = '/:id' // 함수로 조지자
-const EDIT_PROFILE = '/edit-profile'
+const SELECT_TENDENCY = '/select-tendency' // 📗
+const USER_DETAIL = '/:id' // 함수로 조지자 📕
+const EDIT_PROFILE = '/edit-profile' // 📕
 
 // 여행 정보 관련
 // api -> itin ->
-const CREATE_ITINERARY = '/create'
-const ITINERARY_DETAIL = '/:id'
-const EDIT_ITINERARY = '/:id/edit'
-const DELETE_ITINERARY = '/:id/delete'
+const UPLOAD_ITINERARY = '/upload' // 📕
+const ITINERARY_DETAIL = '/:id' // 📕
+const EDIT_ITINERARY = '/:id/edit' // 📕
+const DELETE_ITINERARY = '/:id/delete' // 📕
 
 //희망server 와 통신
 
@@ -30,20 +30,20 @@ const routes = {
     editProfile : EDIT_PROFILE,
     
 
-    create : CREATE_ITINERARY,
+    uploadItinerary : UPLOAD_ITINERARY,
     itineraryDetail : id => {
         if (id)
-            return `/videos/${id}`
+            return `/itinerary/${id}`
         return ITINERARY_DETAIL
     },
     editItinerary : id => {
         if (id)
-            return `/videos/${id}/edit`
+            return `/itinerary/${id}/edit`
         return EDIT_ITINERARY
     },
     deleteItinerary : id => {
         if (id)
-            return `/videos/${id}/delete`
+            return `/itinerary/${id}/delete`
         return DELETE_ITINERARY
     },
 }

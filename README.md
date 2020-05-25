@@ -229,7 +229,10 @@ export const postTendency = async (req, res, next) => {
 ]
 ```
 
-### [❌] Itinerary C/R/U/D
+### [🛠] Itinerary C/R/U/D
+#### ⚙ 동작
+- Itineary Model 만들기
+- User Model에 ref 연결
 1. Create
 2. Read
 3. Update

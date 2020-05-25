@@ -8,6 +8,7 @@ import passport from 'passport'
 import './passport.js'
 import globalRouter from './routers/globalRouter.js'
 import userRouter from './routers/UserRouter.js'
+import itineraryRouter from './routers/ItineraryRouter.js'
 
 
 const app = express()
@@ -21,6 +22,7 @@ app.use(passport.initialize())
 
 app.use('/' , globalRouter)
 app.use('/user', userRouter)
+app.use('/itinerary', itineraryRouter)
 
 
 
