@@ -5,15 +5,16 @@ const LOGIN = '/login'  // 📗
 // user (로그인 하고나서)
 // api -> user ->
 const SELECT_TENDENCY = '/select-tendency' // 📗
-const USER_DETAIL = '/:id' // 함수로 조지자 📕
-const EDIT_PROFILE = '/edit-profile' // 📕
+const USER_DETAIL = '/:id' // 함수로 조지자 📗
+const EDIT_PROFILE = '/edit-profile' // 📗
+const CHANGE_PASSWORD = '/change-password' // 📗
 
 // 여행 정보 관련
 // api -> itin ->
-const UPLOAD_ITINERARY = '/upload' // 📕
-const ITINERARY_DETAIL = '/:id' // 📕
-const EDIT_ITINERARY = '/:id/edit' // 📕
-const DELETE_ITINERARY = '/:id/delete' // 📕
+const UPLOAD_ITINERARY = '/upload' // 📗
+const ITINERARY_DETAIL = '/:id' // 📗
+const EDIT_ITINERARY = '/:id/edit' // 📗
+const DELETE_ITINERARY = '/:id/delete' // 📗
 
 //희망server 와 통신
 
@@ -28,6 +29,7 @@ const routes = {
         return USER_DETAIL
     },
     editProfile : EDIT_PROFILE,
+    changePassword : CHANGE_PASSWORD,
     
 
     uploadItinerary : UPLOAD_ITINERARY,

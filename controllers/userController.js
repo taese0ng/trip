@@ -32,16 +32,15 @@ export const postJoin = async (req, res, next) => {
 // JWT
 // 토큰
 export const postLogin = (req, res, next) => {
-    passport.authenticate('local', {session: false}, 
-        (err, user, info) => {
+    passport.authenticate('local', {session: false}, (err, user, info) => {
             // console.log(user);
-            if(err) console.log(err);
             if (err || !user) {
                 return res.status(400).json({
                     message: 'Check the account',
                     user   : user
                 });
             }
+            
             req.login(user, {session: false}, (err) => {
                 if (err) {
                     res.send(err);
@@ -115,3 +114,50 @@ export const getUserDetail = async (req, res, next) => {
         })
     }
 }
+
+
+// Change Password
+export const postUpdatePassword = async (req, res, next) => {
+    const { 
+        body : { oldPassword, newPassword, newPassword2 },
+        user    // JWT MiddleWare 추가
+    } = req;
+    try {
+        if(newPassword === newPassword2) {
+            await user.changePassword(oldPassword, newPassword);
+            res.status(200).json({
+                message : 'Success to Update password'
+            });
+        } else {
+            res.status(400).json({
+                message : 'Not Match New Password1 and New Password2'
+            });
+        }
+    } catch(err) {
+        console.log(err);
+        res.status(400).json({
+            error : err,
+            message : "Can't Update Password T^T"
+        });
+    }
+}
+
+// Edit Profile
+export const postEditProfile = async (req, res) => {
+    const { body, user } = req;
+    console.log(body);
+    try {
+        
+      await User.findOneAndUpdate(
+        { _id: req.user._id },
+        { ...body }
+      );
+      res.status(200).json({
+          message: 'Sucess to Update Profile'
+      });
+    } catch (error) {
+        res.status(400).json({
+            error
+        });
+    }
+  };

@@ -32,7 +32,7 @@ $ nohup npm start &
 ## **TODO List** 📝
 ### [✔] Sing UP
 #### 📎 API 통신 예제
-- [POST] '/join'
+- **[POST]** '/join'
 - Request
 ```js
 // body
@@ -49,7 +49,7 @@ $ nohup npm start &
 // status : 200 OK
 data : {
     "name": "일용",
-    "token": "eyJhbGciOiJIUzI..." // token 정보 -> LocalStorage에 저장할 것
+    "token": "eyJhbGciOiJIUzI..." // token 정보 -> sessionStorage에 저장할 것
 }
 ```
 - [✔] 아이디 : Email로 변경해야함.
@@ -57,7 +57,7 @@ data : {
 - [+] 성향과 묶어야함.
 ### [✔] Login
 #### 📎 API 통신 예제
-- [POST] '/login'
+- **[POST]** '/login'
 - Request
 ```js
 // body
@@ -171,7 +171,7 @@ export const postLoin = (req, res, next) => {
 - OAuth에 필요
 ### [✔] 초기 Selections 추가
 #### 📎 API 통신 예제
-- [POST] '/user/select-tendency'
+- **[POST]** '/user/select-tendency'
 - Request
 ``` js
 // body
@@ -180,7 +180,7 @@ export const postLoin = (req, res, next) => {
 }
 
 // header
-Authorization : `Bearer ${localStorage.token}` // 꼭 'Bearer ' 붙여줘야함
+Authorization : `Bearer ${sessionStorage.token}` // 꼭 'Bearer ' 붙여줘야함
 ```
 - Response
 ```js
@@ -225,16 +225,60 @@ export const postTendency = async (req, res, next) => {
 ```
 
 
-### [❌] 처음 추천 list 
-- [+] dummy data 던져 주기
+
+### [❌] Edit Profile
+#### 📎 API 통신 예제
+- **[POST]** '/user/edit-profile'
+- Request
+``` js
+// body
+{
+    "name" : "일용"
+    // Avartar 나 다른 것들 나중에 추가할 것.
+}
+
+// header
+Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙여줘야함
+
 ```
-[
-    {
-        "location" : "경주",
-        "img" : "http://49.50.175.145/output/img/${경주}"
-    }, ...
-]
+- Response
+```js
+{
+    message: 'Sucess to Update Profile'
+}
 ```
+
+#### ⚙ 동작
+```js
+await User.findOneAndUpdate(
+        { _id: req.user._id },
+        { ...body }
+      );
+```
+
+### [❌] Change Password
+#### 📎 API 통신 예제
+- **[POST]** '/user/change'
+- Request
+``` js
+// body
+{
+    oldPassword : 'aa', 
+    newPassword : 'zzz', 
+    newPassword2 : 'zzz'
+}
+
+// header
+Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙여줘야함
+
+```
+- Response
+```js
+{
+    message: 'Sucess to Change Password'
+}
+```
+#### ⚙ 동작
 
 ### [✔] 여행일정 C/R/U/D
 #### 📎 API 통신 예제
@@ -256,7 +300,7 @@ export const postTendency = async (req, res, next) => {
     }
 
     // header
-    Authorization : `Bearer ${localStorage.token}` // 꼭 'Bearer ' 붙여줘야함
+    Authorization : `Bearer ${sessionStorage.token}` // 꼭 'Bearer ' 붙여줘야함
     ```
     - Response
     ```js
@@ -340,7 +384,7 @@ export const postTendency = async (req, res, next) => {
     }
 
     // header
-    Authorization : `Bearer ${localStorage.token}` // 꼭 'Bearer ' 붙여줘야함
+    Authorization : `Bearer ${sessionStorage.token}` // 꼭 'Bearer ' 붙여줘야함
     ```
     - Response
     ```js
@@ -356,7 +400,7 @@ export const postTendency = async (req, res, next) => {
     - Request
     ```js
     // header
-    Authorization : `Bearer ${localStorage.token}` // 꼭 'Bearer ' 붙여줘야함
+    Authorization : `Bearer ${sessionStorage.token}` // 꼭 'Bearer ' 붙여줘야함
     ```
     - Response
     ```js

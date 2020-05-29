@@ -55,7 +55,7 @@ export const postEditItinerary = async (req, res, next) => {
         params : {id},
     } = req;
     try {
-        console.log(id);
+        console.log({title, description, routes, id});
         await Itinerary.findOneAndUpdate({_id : id}, {title, description, routes});
         res.status(200).json({
             message : "Success Update Itinerary",
