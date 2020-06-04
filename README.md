@@ -55,6 +55,7 @@ data : {
 - [✔] 아이디 : Email로 변경해야함.
 - [+] 이메일 확인 과정 필요
 - [+] 성향과 묶어야함.
+---
 ### [✔] Login
 #### 📎 API 통신 예제
 - **[POST]** '/login'
@@ -85,8 +86,6 @@ data : {
     "user": false
 }
 ```
-<br>
-
 #### ⚙ 동작
 `passport-local-mongoose` 를 사용하여 local Login 구현
 ```js
@@ -100,7 +99,9 @@ userSchema.plugin(passportLocalMongoose, {usernameField: 'email'}); // passportL
 ```
 - [+] 카카오 아이디로 로그인.
 - [+] 네이버 아이디로 로그인.
+---
 ### ~~[✔] Session~~
+---
 ### [✔] JWT
 `passport-jwt`, `passport`, `jsonwebtoken` 사용
 - 참고 사이트 : [passport.org](http://www.passportjs.org/packages/passport-jwt/), [Learn Using JWT with Passport Authentication](https://medium.com/front-end-weekly/learn-using-jwt-with-passport-authentication-9761539c4314)
@@ -161,14 +162,17 @@ export const postLoin = (req, res, next) => {
 }
 ```
 - [+] Secret 키는 배포전에 process.env.JWT_SECRET 로 숨기기
+---
 ### [✔] Naver Server에 올리기
 #### 🗄 Server
 - `VSCode Remote - WSL` 을 통해 서버의 코드들을 vscode에서 작성 가능 하도록 했음.
 - 도메인 주소 : http://49.50.175.145:3389/
+---
 ### ~~[❌] HTTPS~~
 - https 인증서 발행
   - [참고사이트](http://blog.naver.com/PostView.nhn?blogId=awesomedev&logNo=220713833207)
 - OAuth에 필요
+---
 ### [✔] 초기 Selections 추가
 #### 📎 API 통신 예제
 - **[POST]** '/user/select-tendency'
@@ -180,7 +184,7 @@ export const postLoin = (req, res, next) => {
 }
 
 // header
-Authorization : `Bearer ${sessionStorage.token}` // 꼭 'Bearer ' 붙여줘야함
+Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙여줘야함
 ```
 - Response
 ```js
@@ -192,8 +196,6 @@ Authorization : `Bearer ${sessionStorage.token}` // 꼭 'Bearer ' 붙여줘야�
     ]
 }
 ```
-<br>
-
 #### ⚙ 동작
 - Router
 ```js
@@ -223,10 +225,8 @@ export const postTendency = async (req, res, next) => {
     }
 }
 ```
-
-
-
-### [❌] Edit Profile
+---
+### [✔] Edit Profile
 #### 📎 API 통신 예제
 - **[POST]** '/user/edit-profile'
 - Request
@@ -255,10 +255,10 @@ await User.findOneAndUpdate(
         { ...body }
       );
 ```
-
-### [❌] Change Password
+---
+### [✔] Change Password
 #### 📎 API 통신 예제
-- **[POST]** '/user/change'
+- **[POST]** '/user-password'
 - Request
 ``` js
 // body
@@ -300,7 +300,7 @@ Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙
     }
 
     // header
-    Authorization : `Bearer ${sessionStorage.token}` // 꼭 'Bearer ' 붙여줘야함
+    Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙여줘야함
     ```
     - Response
     ```js
@@ -384,7 +384,7 @@ Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙
     }
 
     // header
-    Authorization : `Bearer ${sessionStorage.token}` // 꼭 'Bearer ' 붙여줘야함
+    Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙여줘야함
     ```
     - Response
     ```js
@@ -400,7 +400,7 @@ Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙
     - Request
     ```js
     // header
-    Authorization : `Bearer ${sessionStorage.token}` // 꼭 'Bearer ' 붙여줘야함
+    Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙여줘야함
     ```
     - Response
     ```js

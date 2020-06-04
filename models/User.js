@@ -16,7 +16,8 @@ const userSchema = new mongoose.Schema({
         default : Date.now
     },
     // item 정보
-    selections : [String],
+    // selections : [String],
+    selections : [ Number ],
 })
 
 userSchema.plugin(passportLocalMongoose, {usernameField: 'email'});

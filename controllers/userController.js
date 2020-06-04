@@ -3,6 +3,7 @@ import routes from '../router.js'
 import User from '../models/User.js'
 import Itinerary from '../models/Itinerary.js'
 import jwt from 'jsonwebtoken'
+import axios from 'axios'
 
 // 회원가입
 export const postJoin = async (req, res, next) => {
@@ -79,15 +80,32 @@ export const postTendency = async (req, res, next) => {
         await User.findOneAndUpdate( { _id: req.user._id },
             { selection }
         )
+
+        try {            
+            axios.post('http://202.31.202.252/api/updateuser/join/', {
+                userid : req.user._id,
+                username : req.user.name,
+                log : selection
+            }).then((res) => {
+                console.log(`Success to Post Recommend server : ${res}`);
+                console.dir(res);
+            }).catch(err => {
+                console.log('희망서버로 못 줌');
+                console.log(err);
+            })  
+        } catch(err) {
+            console.log('희망서버로 못 줌');
+            console.log(err);
+        }
+
         res.status(200).json({
             message: 'Success Update Tedency',
             selection   : selection
         })
     } catch(err) {
-        console.log(`Error with Post Tedency : ${err}`)
-        res.status(400).json({
-            message: 'Fail to update Tedency',
-            selection   : selection
+        console.log(`Error with Post Tedency\n${err}`)
+        res.status(400).send({
+            error: 'Fail to update Tedency'
         })
     }
 }
@@ -108,9 +126,8 @@ export const getUserDetail = async (req, res, next) => {
         })
     } catch(err) {
         console.log(`Get User Detail Error \n ${err}`);
-        res.status(400).json({
-            message : "Failed to get user Detail",
-            error : err
+        res.status(400).send({
+            error : "Failed to get user Detail"
         })
     }
 }
@@ -129,15 +146,14 @@ export const postUpdatePassword = async (req, res, next) => {
                 message : 'Success to Update password'
             });
         } else {
-            res.status(400).json({
-                message : 'Not Match New Password1 and New Password2'
+            res.status(400).send({
+                error : "Not Match New Password1 and New Password2"
             });
         }
     } catch(err) {
         console.log(err);
-        res.status(400).json({
-            error : err,
-            message : "Can't Update Password T^T"
+        res.status(400).send({
+            error : "Can't Update Password T^T"
         });
     }
 }
@@ -153,11 +169,17 @@ export const postEditProfile = async (req, res) => {
         { ...body }
       );
       res.status(200).json({
-          message: 'Sucess to Update Profile'
+          message: 'Sucess to Update Profile',
+          user : {
+            _id : user._id,
+            email : user.email,
+            name : body.name,
+            _selection : user.selections,
+        }
       });
     } catch (error) {
-        res.status(400).json({
+        res.status(400).send({
             error
         });
     }
-  };
+};

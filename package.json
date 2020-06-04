@@ -4,7 +4,7 @@
   "description": "가볍게하자",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node init.js --delay 1 ",
+    "start": "nodemon --exec babel-node init.js --delay 3",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -13,6 +13,7 @@
     "@babel/core": "^7.9.6",
     "@babel/node": "^7.8.7",
     "@babel/preset-env": "^7.9.6",
+    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
     "core-js": "^3.6.5",
