@@ -21,7 +21,10 @@ const itinerarySchema = new mongoose.Schema({
             of: String
         }
     ],
-
+    publish: {
+        type: Boolean,
+        default: false
+    },
 })
 
 const model = mongoose.model('Itinerary', itinerarySchema);

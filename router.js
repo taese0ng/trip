@@ -16,7 +16,12 @@ const ITINERARY_DETAIL = '/:id' // 📗
 const EDIT_ITINERARY = '/:id/edit' // 📗
 const DELETE_ITINERARY = '/:id/delete' // 📗
 
-//희망server 와 통신
+// comment
+const POST_COMMENT = "/content/:id/comment"
+const DELETE_COMMENT = "/api/comment/:id/delete"
+
+// content
+const CONTENT_DETAIL = "/content/:id"
 
 const routes = {
     join : JOIN,    // 1
@@ -48,6 +53,13 @@ const routes = {
             return `/itinerary/${id}/delete`
         return DELETE_ITINERARY
     },
+
+    // 댓글
+    postComment : POST_COMMENT,
+    deleteComment : DELETE_COMMENT,
+
+    // content 등록
+    contentDetail : CONTENT_DETAIL,
 }
 
 export default routes;

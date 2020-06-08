@@ -1,7 +1,18 @@
 import app from './app.js';
 import './db.js';
 
-// Models
-import './models/User.js'
+// Environment Variables
+import dotenv from 'dotenv';
+dotenv.config();
 
-app.listen(3389, () => console.log(`✅  Listening on: http://49.50.175.145:33989`));
+// Models
+import './models/User.js';
+
+app.listen(process.env.WORKING_ON === "DEV" ?
+    process.env.DEV_PORT
+    : process.env.PROD_PORT
+    , () => console.log(`✅  Listening on: ${
+    process.env.WORKING_ON === "DEV" ? 
+    `http://localhost:${process.env.DEV_PORT}`
+    : process.env.DOMAIN_URL
+}`));

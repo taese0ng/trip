@@ -23,4 +23,6 @@ userRouter.post(routes.changePassword,
     passport.authenticate('jwt', { session: false}),
     postUpdatePassword)
 
+
+
 export default userRouter;

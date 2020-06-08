@@ -2,6 +2,8 @@ import passport from 'passport'
 import passportJWT from 'passport-jwt'
 import User from './models/User.js'
 import { verifyUser } from './controllers/userController.js'
+import dotenv from 'dotenv'
+dotenv.config()
 
 // local Login
 passport.use(User.createStrategy())
@@ -11,7 +13,7 @@ passport.use(
     new passportJWT.Strategy({
             // options
             jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(), 
-            secretOrKey   : 'thisIsMySecret'
+            secretOrKey   : process.env.JWT_SECRET_KEY
         },
         // callback
         verifyUser

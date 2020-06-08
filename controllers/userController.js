@@ -4,6 +4,8 @@ import User from '../models/User.js'
 import Itinerary from '../models/Itinerary.js'
 import jwt from 'jsonwebtoken'
 import axios from 'axios'
+import dotenv from 'dotenv'
+dotenv.config();
 
 // 회원가입
 export const postJoin = async (req, res, next) => {
@@ -48,7 +50,7 @@ export const postLogin = (req, res, next) => {
                 }
                 // generate a signed son web token with the contents of user object and return it in the response
                 // console.log(`jwt 전`)
-                const token = jwt.sign(user.email, 'thisIsMySecret');
+                const token = jwt.sign(user.email, process.env.JWT_SECRET_KEY);
                 return res.json({
                     user : {
                         _id : user._id,

@@ -1,6 +1,6 @@
 # 너의 일정을 짜고 싶어
 ## **Server** 📖
-### 🔧 개발 도구
+### 🔨 개발 도구
 #### Node.js + Express<br>
   
 ```
@@ -279,7 +279,7 @@ Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙
 }
 ```
 #### ⚙ 동작
-
+---
 ### [✔] 여행일정 C/R/U/D
 #### 📎 API 통신 예제
 1. Create
@@ -435,6 +435,7 @@ const model = mongoose.model('Itinerary', itinerarySchema);
 export default model;
 
 ```
+---
 ### [✔] My Page
 #### 📎 API 통신 예제
 - **[GET]** '/user/${사용자 id 값}'
@@ -482,7 +483,104 @@ export default model;
 ```
 #### ⚙ 동작
 ~~생략~~
+
+---
+###[✔] Content 얻기
+#### 📎 API 통신 예제
+- **[GET]** '/content/${location ID}'
+  - ex) location ID : 12542 (여수역)
+- Request
+```js
+// None
+```
+- Response
+```js
+```
+
+
+### [✔] My Page
+#### 📎 API 통신 예제
+- **[GET]** '/user/${사용자 id 값}'
+- Request
+```js
+// None
+```
+- Response
+```js
+{
+    "message": "Success Get Content Detail",
+    "content": {
+        "_id": "5ede56660f34f650a8868946",
+        "content": 123,
+        "createdAt": "2020-06-08T15:16:54.585Z",
+        "__v": 0
+    },
+    "comments": []
+}
+```
+---
+### [✔] Create Comment 
+#### 📎 API 통신 예제
+- **[POST]** '/content/${content ID}/comment'
+  - ex) content ID는 위의 Content ID를 클릭 할 경우 생성된 content 고유의 ID
+  - response 의 content._id 를 참조해야함.
+- Request
+```js
+// body (수정할 것 만 넣으면 됨)
+{
+    "text" : "할말은 많지만 하지 않겠다..."
+}
+
+// header
+Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙여줘야함
+```
+- Response
+```js
+{
+    "msg": "Success Post Comment",
+    "comment": {
+        "_id": "5ede5aa99a72f3641c7b0ac7",
+        "comment": "할많하않1",
+        "author": "5ede501e84a4015658c06625",
+        "content": "5ede56660f34f650a8868946",
+        "createdAt": "2020-06-08T15:35:05.863Z",
+        "__v": 0
+    }
+}
+```
+---
+### [✔] Delete Comment
+#### 📎 API 통신 예제
+- **[GET]** '/api/comment/${comment id 값}/delete'
+  - comment 고유의 _id 값임
+- Request
+```js
+// header
+Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙여줘야함
+```
+- Response
+```js
+{
+    "message": "Success To Delete Comment"
+}
+```
+---
+### [❌] Itinerary 공유 설정
+- [ ] [GET] 공유 설정 요청 받기
+- [ ] 사용자 토큰 인증 하기
+- [ ] findOneAndUpdate 하여 `"publish" : true`로 고치기
+---
+### [❌] Itinerary 공유 해제
+- [ ] [GET] 공유 설정 요청 받기
+- [ ] 사용자 토큰 인증 하기
+- [ ] findOneAndUpdate 하여 `"publish" : true`로 고치기
+---
+### [❌] Share Page 
+- [ ] [GET] publish 가 true 인 것 들 모두 보내기
+- [ ] Global Router에 구현 하면 되겠다.
+---
 ### [❌] 이메일 인증 하기
-### [❌] 네이버 아이디로 로그인
-
-
+- [ ] 언제 하누?
+---
+### [❌] 카카오 아이디로 로그인
+- [ ] Front 가 편안할 때 하기 (ㅋㅋ)
