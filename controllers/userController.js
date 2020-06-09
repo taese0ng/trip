@@ -25,6 +25,7 @@ export const postJoin = async (req, res, next) => {
     try {
         await User.register(user, password);
         // res.status(200).send('join success');
+        req.user = user;
         next(); // login 바로 연결
     }catch(err) {
         console.log(`Join Error : ${err}`);
@@ -77,20 +78,21 @@ export const verifyUser = async (jwt_payload, done) => {
 
 // 성향 파악 질문
 export const postTendency = async (req, res, next) => {
-    const { body : { selection }  } = req;
+    const { body : { selections }  } = req;
     try {
         await User.findOneAndUpdate( { _id: req.user._id },
-            { selection }
+            { selections }
         )
+        
 
         try {            
             axios.post('http://202.31.202.252/api/updateuser/join/', {
-                userid : req.user._id,
-                username : req.user.name,
-                log : selection
+                userId : req.user._id,
+                userName : req.user.name,
+                log : selections
             }).then((res) => {
-                console.log(`Success to Post Recommend server : ${res}`);
-                console.dir(res);
+                console.log(`Success to Post Recommend server`);
+                // console.dir(res);
             }).catch(err => {
                 console.log('희망서버로 못 줌');
                 console.log(err);
@@ -102,7 +104,7 @@ export const postTendency = async (req, res, next) => {
 
         res.status(200).json({
             message: 'Success Update Tedency',
-            selection   : selection
+            selections
         })
     } catch(err) {
         console.log(`Error with Post Tedency\n${err}`)

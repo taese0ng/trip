@@ -25,6 +25,13 @@ const itinerarySchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    /*
+    date : {
+        type : String,
+        required : "Date is Required"
+    }
+
+    */
 })
 
 const model = mongoose.model('Itinerary', itinerarySchema);

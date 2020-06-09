@@ -1,15 +1,15 @@
 import express from 'express'
 import routes from '../router.js'
 import passport from 'passport'
-import { postJoin, postLogin } from '../controllers/userController.js';
-import { postComment, deleteComment } from '../controllers/CommentController.js';
-import { getContentDetail } from '../controllers/ContentController.js';
+import { postJoin, postLogin, postTendency } from '../controllers/userController.js';
+import { postComment, deleteComment } from '../controllers/commentController.js';
+import { getContentDetail } from '../controllers/contentController.js';
 
 
 const globalRouter = express.Router();
 
 // 회원가입
-globalRouter.post(routes.join, postJoin, postLogin);
+globalRouter.post(routes.join, postJoin, postTendency, postLogin);
 
 // 로그인
 globalRouter.post(routes.login, postLogin);

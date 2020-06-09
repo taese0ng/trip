@@ -1,4 +1,4 @@
-import Content from '../models/Content';
+// import Content from '../models/Content';
 import Comment from '../models/Comment';
 
 // post Comment
@@ -8,6 +8,8 @@ export const postComment = async (req, res) => {
         params : { id },    // contentId
         user
     } = req;
+    console.log(text);
+    console.log(id);
     
     try {
         const comment = await Comment.create({
