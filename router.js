@@ -11,10 +11,13 @@ const CHANGE_PASSWORD = '/change-password' // 📗
 
 // 여행 정보 관련
 // api -> itin ->
+const PUBLIC_ITINERARY = "/"
 const UPLOAD_ITINERARY = '/upload' // 📗
 const ITINERARY_DETAIL = '/:id' // 📗
 const EDIT_ITINERARY = '/:id/edit' // 📗
 const DELETE_ITINERARY = '/:id/delete' // 📗
+const SET_PUBLIC = '/:id/public'
+const SET_PRIVATE = '/:id/private'
 
 // comment
 const POST_COMMENT = "/content/:id/comment"
@@ -22,6 +25,8 @@ const DELETE_COMMENT = "/api/comment/:id/delete"
 
 // content
 const CONTENT_DETAIL = "/content/:id"
+
+// 
 
 const routes = {
     join : JOIN,    // 1
@@ -37,6 +42,7 @@ const routes = {
     changePassword : CHANGE_PASSWORD,
     
 
+    getItineraries : PUBLIC_ITINERARY,
     uploadItinerary : UPLOAD_ITINERARY,
     itineraryDetail : id => {
         if (id)
@@ -53,6 +59,16 @@ const routes = {
             return `/itinerary/${id}/delete`
         return DELETE_ITINERARY
     },
+    setPublic : id => {
+        if(id)
+            return `/itinerary/${id}/public`
+        return SET_PUBLIC
+    },
+    setPrivate : id => {
+        if(id)
+            return `/itinerary/${id}/private`
+        return SET_PRIVATE
+    },
 
     // 댓글
     postComment : POST_COMMENT,
@@ -60,6 +76,7 @@ const routes = {
 
     // content 등록
     contentDetail : CONTENT_DETAIL,
+
 }
 
 export default routes;

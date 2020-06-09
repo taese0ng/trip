@@ -92,3 +92,58 @@ export const getDeleteItinerary = async (req, res, next) => {
         })
     }
 }
+
+export const getItineraries = async (req, res) => {
+    try {
+        const items = await Itinerary.find({publish:true}).sort({createdAt: -1});
+        res.status(200).json({
+            message : "Success to get Itineraries",
+            items
+        })
+        res.end();
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({error : err});
+        res.end();
+    }
+} 
+
+export const setPublic = async (req, res) => {
+    const {
+        params : { id },
+        user
+    } = req;
+    try {
+        await Itinerary.findOneAndUpdate({_id : id}, {publish: true});
+        const update = await Itinerary.findOne({_id: id});
+        res.status(200).json({
+            message : "Success to set public",
+            item : update
+        })
+        res.end();
+    } catch(error) {
+        console.log(error);
+        res.status(400).json({error})
+        res.end();
+    }
+}
+
+export const setPrivate = async (req, res) => {
+    const {
+        params : { id },
+        user
+    } = req;
+    try {
+        await Itinerary.findOneAndUpdate({_id : id}, {publish: false});
+        const update = await Itinerary.findOne({_id: id});
+        res.status(200).json({
+            message : "Success to set private",
+            item : update
+        })
+        res.end();
+    } catch(error) {
+        console.log(error);
+        res.status(400).json({error})
+        res.end();
+    }
+}

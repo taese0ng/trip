@@ -485,22 +485,10 @@ export default model;
 ~~생략~~
 
 ---
-###[✔] Content 얻기
+### [✔] Content 얻기
 #### 📎 API 통신 예제
 - **[GET]** '/content/${location ID}'
   - ex) location ID : 12542 (여수역)
-- Request
-```js
-// None
-```
-- Response
-```js
-```
-
-
-### [✔] My Page
-#### 📎 API 통신 예제
-- **[GET]** '/user/${사용자 id 값}'
 - Request
 ```js
 // None
@@ -565,19 +553,93 @@ Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙
 }
 ```
 ---
-### [❌] Itinerary 공유 설정
-- [ ] [GET] 공유 설정 요청 받기
-- [ ] 사용자 토큰 인증 하기
-- [ ] findOneAndUpdate 하여 `"publish" : true`로 고치기
+### [✔] Itinerary 공유 
+#### 📎 API 통신 예제
+- **[GET]** '/itinerary/${여행 일정 id}/public'
+- Request
+```js
+// header
+Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙여줘야함
+```
+- Response
+```js
+{
+    "message": "Success to set public",
+    "item": {
+        "routes": [
+            {
+                "name": "부산역"
+            },
+            {
+                "name": "해운대"
+            },
+            {
+                "name": "부산역"
+            }
+        ],
+        "publish": true,
+        "_id": "5ede50da84a4015658c06626",
+        "creator": "5ede501e84a4015658c06625",
+        "title": "부산 여행",
+        "description": "부산 여행 갔다 ^^ (수정)",
+        "createdAt": "2020-06-08T14:53:14.515Z",
+        "__v": 0
+    }
+}
+```
 ---
-### [❌] Itinerary 공유 해제
-- [ ] [GET] 공유 설정 요청 받기
-- [ ] 사용자 토큰 인증 하기
-- [ ] findOneAndUpdate 하여 `"publish" : true`로 고치기
+### [✔] Itinerary 공유 해제
+#### 📎 API 통신 예제
+- **[GET]** '/itinerary/${여행 일정 id}/private'
+- Request
+```js
+// header
+Authorization : `Bearer ${sessionStorage.getItem('token')}` // 꼭 'Bearer ' 붙여줘야함
+```
+- Response
+```js
+// 위 응답과 동일하고 
+// ...
+    "publish" : false // 이부분만 다름
+// ...
+
+```
 ---
-### [❌] Share Page 
-- [ ] [GET] publish 가 true 인 것 들 모두 보내기
-- [ ] Global Router에 구현 하면 되겠다.
+### [✔] Share Page 
+#### 📎 API 통신 예제
+- **[GET]** '/itinerary/'
+- Request
+```js
+// None
+```
+- Response
+```js
+{
+    "message": "Success to get Itineraries",
+    "items": [
+        {
+            "routes": [
+                {
+                    "name": "부산역"
+                },
+                {
+                    "name": "해운대"
+                },
+                {
+                    "name": "부산역"
+                }
+            ],
+            "publish": true,
+            "_id": "5ede50da84a4015658c06626",
+            "creator": "5ede501e84a4015658c06625",
+            "title": "부산 여행",
+            "description": "부산 여행 갔다 ^^ (수정)",
+            "createdAt": "2020-06-08T14:53:14.515Z",
+            "__v": 0
+        }
+    ]
+}
+```
 ---
 ### [❌] 이메일 인증 하기
 - [ ] 언제 하누?
