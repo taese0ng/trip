@@ -32,6 +32,7 @@ export const getContentDetail = async (req, res) => {
             res.status(200).json({
                 message: 'Success Create Content Detail',
                 content,
+                //여기 newContent로 변경해야합니다 ㅋ
             })
             res.end();
         }
